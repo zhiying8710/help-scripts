@@ -1,0 +1,57 @@
+﻿user  root;
+worker_processes  4;
+
+error_log  /root/nginx/logs/error.log;
+
+events {
+    worker_connections  10240;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    sendfile        on;
+    keepalive_timeout  65;
+
+    #gzip  on;
+    upstream  localhost   {
+              server   localhost:8082;
+              server   localhost:8083;
+    }
+    server {
+        listen       8081;
+        server_name  localhost;
+        charset utf-8;
+        location / {
+            root   html;
+            index  index.html index.htm;
+            proxy_pass       http://localhost;
+            proxy_set_header  X-Real-IP  $remote_addr;
+            client_max_body_size  100m;
+        }
+
+
+        location ~ ^/(WEB-INF)/ {
+        deny all;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+    }
+    server {
+                listen    9999;
+                location  ~.*\.(js|css|gif|jpg|jpeg|png)$  {
+
+                    root /root/ubc/oem_logo;
+                    access_log off;
+
+                    expires 30m;
+
+                   }
+               }
+}
