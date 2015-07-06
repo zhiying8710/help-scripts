@@ -1,0 +1,12 @@
+1. 打包
+    生产: mvn package -P release
+    开发: mvn package -P dev
+
+2. 配置文件有两份
+    dev-conf.properties: 开发配置
+    release-conf.properties: 生产配置
+
+3. spring的配置文件存在于两个位置
+    webapp/WEB-INF/spring
+    src/main/spring
+    在前一个文件中做的修改应该同样在第二份中做修改, 注意占位符, 第二个文件夹中的配置文件会通过占位符被*-conf.properties中的值填充

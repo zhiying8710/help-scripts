@@ -1,0 +1,46 @@
+1. nginx 反向代理		
+		location ^~ /unionbank {
+            proxy_pass   http://127.0.0.1:8008/unionbank;
+            #proxy_redirect off;
+            proxy_set_header X-Real-IP $remote_addr;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+
+2. 查找内容:
+	cat -n logs/catalina.out |grep -15 6227001263001504543
+	cat -n logs/mailgrap.log.1|grep -b 1 '卡号与token不符' > 1.txt
+
+	sed -n  'x,yp'  filename 命令 打印出起始行和结束行之间的内容
+
+3. 查找pid
+	pidinfo=`ps x|grep 'tomcat_unionbank_monitor/' |awk '{print $1}'`
+      #echo $pidinfo
+      pids=(${pidinfo//\n/ })
+      for i in ${pids[@]}
+      do
+          kill $i
+      done
+      echo "done"
+
+
+4. 限制所有ip访问3128
+  iptables -I INPUT -p tcp --dport 2128 -j DROP
+  允许指定ip访问3128
+    iptables -I INPUT -s 219.133.170.172 -p tcp --dport 2128 -j ACCEPT
+    iptables -I INPUT -s 118.194.41.180 -p tcp --dport 2128 -j ACCEPT
+    iptables -I INPUT -s 120.236.31.84 -p tcp --dport 2128 -j ACCEPT
+
+5. 安装ss5
+	ss5:
+  1.  yum install -y openldap openldap-servers openldap-clients openldap-devel compat-openldapyum install db4 db4-utils pam-devel openssl-devel 
+  2.  修改配置文件:
+      /etc/opt/ss5/ss5.conf
+      修改:
+      #auth 0.0.0.0/0 – -
+      改成:
+      auth 0.0.0.0/0 – -
+      修改：
+      #permit – 0.0.0.0/0 – 0.0.0.0/0 – – – – -
+      改成:
+      permit - 0.0.0.0/0 – 0.0.0.0/0 – – – – -
+  3. ss5 -t -b 0.0.0.0:8088 -p ss5.pid -u root
