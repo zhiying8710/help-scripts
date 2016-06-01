@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<!-- saved from url=(0033)http://www.xiaoz.me/archives/5643 -->
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" class=" js"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta property="wb:webmaster" content="a888239e37aef70b">
+<meta property="qc:admins" content="37302477176275015016763757">
+
+<title>CentOS一键安装shadowsocks脚本 | 小z博客</title> 
+<meta name="description" content="Shadowsocks是一个基于python的轻量级socks代理软件,可以在任何系统简单的实现访问被屏蔽的网站。网友也常称为科学上网，简称ss,在此分享与记录CentOS一键安装shadowsocks脚本。">
+<meta name="keywords" content="shadowsocks,科学上网">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/style.css" type="text/css" media="screen">
+<link rel="shortcut icon" href="http://pic.bsdev.cn/wp-content/themes/TangStyle_V1.0.8/images/favicon.ico" type="image/x-icon">
+<script src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/hm.js"></script><script src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/jquery.min.js"></script><style type="text/css"></style>
+<!--切换为百度前端库
+<script src = "http://apps.bdimg.com/libs/jquery/1.7.2/jquery.min.js"></script>
+-->
+<script src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/theme.js"></script>
+<link rel="alternate" type="application/rss+xml" title="小z博客 RSS Feed" href="http://www.xiaoz.me/feed">
+<link rel="pingback" href="http://www.xiaoz.me/xmlrpc.php">
+<link rel="alternate" type="application/rss+xml" title="小z博客 » CentOS一键安装shadowsocks脚本评论Feed" href="http://www.xiaoz.me/archives/5643/feed">
+<link rel="stylesheet" id="wp-syntax-css-css" href="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/wp-syntax.css" type="text/css" media="all">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://www.xiaoz.me/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://pic.bsdev.cn/wp-includes/wlwmanifest.xml"> 
+<link rel="prev" title="Windows使用Shadowsocks科学上网" href="http://www.xiaoz.me/archives/5616">
+<link rel="next" title="站长戳进来，阿里云代金券免费领取" href="http://www.xiaoz.me/archives/5654">
+
+<link rel="shortlink" href="http://www.xiaoz.me/?p=5643">
+	<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+
+<!-- All in One SEO Pack 2.2.3.1 by Michael Torbert of Semper Fi Web Design[233,270] -->
+<link rel="canonical" href="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/CentOS一键安装shadowsocks脚本 _ 小z博客.html">
+<!-- /all in one seo pack -->
+<!-- 百度异步统计 -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?122c65c6dbd2900393fe6646ed641194";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+<!-- 百度异步统计END -->
+<style type="text/css">
+	#art_left{
+		position:fixed;
+		top:50%;
+		left:10px;
+		margin-top:-32px;
+	}
+	#art_right{
+		position:fixed;
+		top:50%;
+		right:10px;
+		margin-top:-32px;
+	}
+</style>
+<script src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/qc.php" type="text/javascript" charset="utf-8"></script></head>
+
+<body>
+<div id="wrap">
+	
+<div id="header">
+    <div class="logo"><a href="http://www.xiaoz.me/">小z博客</a><p>享你所想</p></div>
+    <div id="navigation">
+    <ul id="nav"><li id="menu-item-245" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-245"><a title="返回首页" href="http://www.xiaoz.me/">首页</a></li>
+<li id="menu-item-289" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-289"><a href="http://www.xiaoz.me/archives/category/wordpress-2">WordPress</a>
+<ul class="sub-menu">
+	<li id="menu-item-1514" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1514"><a title="WordPress主题" href="http://www.xiaoz.me/archives/category/wordpress-2/themes">WP主题</a></li>
+	<li id="menu-item-1513" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1513"><a href="http://www.xiaoz.me/archives/category/wordpress-2/plugins">WP插件</a></li>
+	<li id="menu-item-1515" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1515"><a href="http://www.xiaoz.me/archives/category/wordpress-2/skills">WP技巧</a></li>
+	<li id="menu-item-1957" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1957"><a href="http://www.xiaoz.me/archives/category/wordpress-2/jz">建站</a></li>
+</ul>
+</li>
+<li id="menu-item-771" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-771"><a href="http://www.xiaoz.me/archives/category/jiaocheng">实用教程</a>
+<ul class="sub-menu">
+	<li id="menu-item-257" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-257"><a href="http://www.xiaoz.me/archives/category/jiaocheng/original">原创</a></li>
+	<li id="menu-item-433" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-433"><a href="http://www.xiaoz.me/archives/category/jiaocheng/experience">心得</a></li>
+	<li id="menu-item-266" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-266"><a href="http://www.xiaoz.me/archives/category/jiaocheng/%e8%bd%ac%e8%bd%bd">转载</a></li>
+</ul>
+</li>
+<li id="menu-item-770" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item-770"><a href="http://www.xiaoz.me/archives/category/soft">软件下载</a>
+<ul class="sub-menu" style="display: none;">
+	<li id="menu-item-264" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-264"><a href="http://www.xiaoz.me/archives/category/soft/%e7%b3%bb%e7%bb%9f%e4%bc%98%e5%8c%96">系统优化</a></li>
+	<li id="menu-item-268" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-268"><a href="http://www.xiaoz.me/archives/category/soft/%e7%bd%91%e7%bb%9c%e5%b7%a5%e5%85%b7">网络工具</a></li>
+	<li id="menu-item-928" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-928"><a href="http://www.xiaoz.me/archives/category/soft/images">图像图像</a></li>
+	<li id="menu-item-260" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-260"><a href="http://www.xiaoz.me/archives/category/soft/microsoft">微软官方</a></li>
+	<li id="menu-item-258" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-258"><a href="http://www.xiaoz.me/archives/category/soft/practical">实用工具</a></li>
+	<li id="menu-item-420" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-420"><a href="http://www.xiaoz.me/archives/category/soft/player">媒体播放</a></li>
+	<li id="menu-item-1003" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1003"><a href="http://www.xiaoz.me/archives/category/soft/%e8%a3%85%e6%9c%ba%e5%bf%85%e5%a4%87">装机必备</a></li>
+	<li id="menu-item-265" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-265"><a href="http://www.xiaoz.me/archives/category/soft/%e8%81%8a%e5%a4%a9%e9%80%9a%e8%ae%af">聊天通讯</a></li>
+	<li id="menu-item-252" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-252"><a href="http://www.xiaoz.me/archives/category/soft/books">书籍资料</a></li>
+	<li id="menu-item-259" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-259"><a href="http://www.xiaoz.me/archives/category/soft/developer">开发者</a></li>
+</ul>
+</li>
+<li id="menu-item-1521" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-1521"><a href="http://www.xiaoz.me/archives/category/welfare">福利分享</a></li>
+<li id="menu-item-5519" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-5519"><a href="http://www.xiaoz.me/archives/5643#">关于小站</a>
+<ul class="sub-menu">
+	<li id="menu-item-1558" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1558"><a href="http://www.xiaoz.me/about">网站简介</a></li>
+	<li id="menu-item-5537" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5537"><a href="http://www.xiaoz.me/service">网站服务</a></li>
+	<li id="menu-item-5521" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5521"><a href="http://www.xiaoz.me/time">时光轴</a></li>
+</ul>
+</li>
+</ul><select class="selectnav" id="selectnav1"><option value="">[选择频道]</option><option value="http://www.xiaoz.me/">首页</option><option value="http://www.xiaoz.me/archives/category/wordpress-2">WordPress</option><option value="http://www.xiaoz.me/archives/category/wordpress-2/themes">- WP主题</option><option value="http://www.xiaoz.me/archives/category/wordpress-2/plugins">- WP插件</option><option value="http://www.xiaoz.me/archives/category/wordpress-2/skills">- WP技巧</option><option value="http://www.xiaoz.me/archives/category/wordpress-2/jz">- 建站</option><option value="http://www.xiaoz.me/archives/category/jiaocheng">实用教程</option><option value="http://www.xiaoz.me/archives/category/jiaocheng/original">- 原创</option><option value="http://www.xiaoz.me/archives/category/jiaocheng/experience">- 心得</option><option value="http://www.xiaoz.me/archives/category/jiaocheng/%e8%bd%ac%e8%bd%bd">- 转载</option><option value="http://www.xiaoz.me/archives/category/soft">软件下载</option><option value="http://www.xiaoz.me/archives/category/soft/%e7%b3%bb%e7%bb%9f%e4%bc%98%e5%8c%96">- 系统优化</option><option value="http://www.xiaoz.me/archives/category/soft/%e7%bd%91%e7%bb%9c%e5%b7%a5%e5%85%b7">- 网络工具</option><option value="http://www.xiaoz.me/archives/category/soft/images">- 图像图像</option><option value="http://www.xiaoz.me/archives/category/soft/microsoft">- 微软官方</option><option value="http://www.xiaoz.me/archives/category/soft/practical">- 实用工具</option><option value="http://www.xiaoz.me/archives/category/soft/player">- 媒体播放</option><option value="http://www.xiaoz.me/archives/category/soft/%e8%a3%85%e6%9c%ba%e5%bf%85%e5%a4%87">- 装机必备</option><option value="http://www.xiaoz.me/archives/category/soft/%e8%81%8a%e5%a4%a9%e9%80%9a%e8%ae%af">- 聊天通讯</option><option value="http://www.xiaoz.me/archives/category/soft/books">- 书籍资料</option><option value="http://www.xiaoz.me/archives/category/soft/developer">- 开发者</option><option value="http://www.xiaoz.me/archives/category/welfare">福利分享</option><option value="http://www.xiaoz.me/archives/5643#">关于小站</option><option value="http://www.xiaoz.me/about">- 网站简介</option><option value="http://www.xiaoz.me/service">- 网站服务</option><option value="http://www.xiaoz.me/time">- 时光轴</option></select>	
+	
+    <ul class="my">
+        
+    </ul>
+    </div> 
+	
+</div>
+<div id="content">
+
+<!--面包屑导航调用-->
+<div class="mbx-dh">
+<div id="crumbs"><a href="http://www.xiaoz.me/">首页</a> » <a href="http://www.xiaoz.me/archives/category/notes">Notes</a> » <a href="http://www.xiaoz.me/archives/category/notes/linux">Linux</a> » <span>CentOS一键安装shadowsocks脚本</span></div> 
+</div>
+<!--面包屑导航结束-->	<div id="main">
+				<div id="article">
+			<h1><a href="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/CentOS一键安装shadowsocks脚本 _ 小z博客.html" title="CentOS一键安装shadowsocks脚本">CentOS一键安装shadowsocks脚本</a></h1>
+			<div class="info">
+            	<span class="meat_span">作者: 小z</span>
+                <span class="meat_span">分类: <a href="http://www.xiaoz.me/archives/category/notes/linux" rel="category tag">Linux</a></span>
+                <span class="meat_span">发布时间: 2015-02-07 09:30</span>
+                <span class="meat_span"><i class="iconfont">ė</i>浏览 2,546 次</span>
+                <span class="meat_span"><i class="iconfont">6</i><a href="http://www.xiaoz.me/archives/5643#comments">11条评论</a></span>
+                		<!--主机推荐-->
+<div class="tuijian" id="tuijian">本站为您推荐（香港平价主机）：<a href="http://www.xiaoz.me/laoxue" title="点此可领取老薛主机优惠码" target="_blank" rel="external nofollow">老薛主机</a>&nbsp;|&nbsp;<a href="http://www.xiaoz.me/url/?id=6" title="小z博客正在使用主机" target="_blank" rel="external nofollow">恒创主机</a>
+&nbsp;
+</div>
+
+
+
+
+	<meta charset="utf-8">
+	<title>New Document</title>
+	<meta name="generator" content="EverEdit">
+	<meta name="author" content="">
+	<meta name="keywords" content="">
+	<meta name="description" content="">
+
+
+			<!--主机推荐-->
+            </div>
+			<div class="text"><p>Shadowsocks是一个基于python的轻量级socks代理软件,可以在任何系统简单的实现访问被屏蔽的网站。网友也常称为科学上网，简称ss,在此分享与记录CentOS一键安装shadowsocks脚本。</p>
+<div id="biaoti">
+<h3>一、使用root用户登录，运行以下命令：</h3>
+</div>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre>1
+2
+3
+</pre></td><td class="code"><pre class="html" style="font-family:monospace;">wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh
+chmod +x shadowsocks.sh
+./shadowsocks.sh 2&gt;&amp;1 | tee shadowsocks.log</pre></td></tr></tbody></table></div>
+
+<div id="biaoti">
+<h3>二、安装完成后，脚本提示如下：</h3>
+</div>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre class="html" style="font-family:monospace;">Congratulations, shadowsocks install completed!
+Your Server IP:your_server_ip
+Your Server Port:8989
+Your Password:your_password
+Your Local IP:127.0.0.1
+Your Local Port:1080
+Your Encryption Method:aes-256-cfb
+&nbsp;
+Welcome to visit:http://teddysun.com/342.html
+Enjoy it!</pre></td></tr></tbody></table></div>
+
+<div id="biaoti">
+<h3>三、卸载方法</h3>
+</div>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre>1
+</pre></td><td class="code"><pre class="html" style="font-family:monospace;">./shadowsocks.sh uninstall</pre></td></tr></tbody></table></div>
+
+<div id="biaoti">
+<h3>四、配置文件</h3>
+</div>
+<p>配置文件路径为：/etc/shadowsocks.json </p>
+<p>单用户配置：</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+</pre></td><td class="code"><pre class="html" style="font-family:monospace;">{
+    "server":"your_server_ip",
+    "server_port":8989,
+    "local_address":"127.0.0.1",
+    "local_port":1080,
+    "password":"yourpassword",
+    "timeout":300,
+    "method":"aes-256-cfb",
+    "fast_open": false
+}</pre></td></tr></tbody></table></div>
+
+<p>多用户配置：</p>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+</pre></td><td class="code"><pre class="html" style="font-family:monospace;">{
+    "server":"your_server_ip",
+    "local_address": "127.0.0.1",
+    "local_port":1080,
+    "port_password":{
+         "8989":"password0",
+         "9001":"password1",
+         "9002":"password2",
+         "9003":"password3",
+         "9004":"password4"
+    },
+    "timeout":300,
+    "method":"aes-256-cfb",
+    "fast_open": false
+}</pre></td></tr></tbody></table></div>
+
+<div id="biaoti">
+<h3>五、相关使用命令</h3>
+</div>
+
+<div class="wp_syntax"><table><tbody><tr><td class="line_numbers"><pre>1
+2
+3
+4
+</pre></td><td class="code"><pre class="html" style="font-family:monospace;">启动：/etc/init.d/shadowsocks start
+停止：/etc/init.d/shadowsocks stop
+重启：/etc/init.d/shadowsocks restart
+状态：/etc/init.d/shadowsocks status</pre></td></tr></tbody></table></div>
+
+<p><strong>其它说明：</strong>默认配置服务器端口：8989客户端端口：1080，密码：自己设定（如不设定，默认为teddysun.com），多用户配置后需要重启shadowsocks服务。Windows客户端使用和下载请查看：<a href="http://www.xiaoz.me/archives/5616" title="Windows使用Shadowsocks科学上网" target="_blank">Windows使用Shadowsocks科学上网</a></p>
+<blockquote><p>
+<strong>原文来自：</strong><a href="http://teddysun.com/342.html" title="CentOS下shadowsocks一键安装脚本" rel="nofollow" target="_blank">CentOS下shadowsocks一键安装脚本</a>
+</p></blockquote>
+<blockquote><p>
+<span style="color:red;"><span style="color:red;">代为安装VPN服务，收费30元，有需要的请直接添加QQ：337003006</span></span>
+</p></blockquote>
+
+			<!--文章分页效果-->
+			  
+  
+			<!--文章分页结束-->
+
+			</div>
+            <div class="text_add">
+                <div class="copy"><p style="color:#F00;">本文出自 小z博客，转载时请注明出处及相应链接。</p><p style="color:#777;font-size:12px;">本文永久链接: http://www.xiaoz.me/archives/5643</p></div>
+                <div class="share"><span style="vertical-align:top;">分享至：</span><a href="javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f='http://v.t.sina.com.cn/share/share.php?appkey=1951156462',u=z||d.location,p=['&url=',e(u),'&title=','【' + e(t||d.title) + '】'+ share_desc,'&source=',e(r),'&sourceUrl=',e(l),'&content=',c||'gb2312','&pic=',e(p||'')].join('');function%20a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=440,height=430,left=',(s.width-440)/2,',top=',(s.height-430)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,'','','','','','utf-8'));"><img src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/Weibo_Buttons.png" style="vertical-align:top;"></a> 
+<script type="text/javascript">
+(function(){
+var p = {
+url:location.href,
+showcount:'0',/*是否显示分享总数,显示：'1'，不显示：'0' */
+desc:'',/*默认分享理由(可选)*/
+summary:'',/*分享摘要(可选)*/
+title:'',/*分享标题(可选)*/
+site:'',/*分享来源 如：腾讯网(可选)*/
+pics:'', /*分享图片的路径(可选)*/
+style:'202',
+width:31,
+height:31
+};
+var s = [];
+for(var i in p){
+s.push(i + '=' + encodeURIComponent(p[i]||''));
+}
+document.write(['<a version="1.0" class="qzOpenerDiv" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?',s.join('&'),'" target="_blank">分享</a>'].join(''));
+})();
+</script><iframe version="1.0" src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/cgi_qzshare_likeurl.html" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:31px; height:31px;" allowtransparency="true"></iframe>
+<script src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/qzopensl.js" charset="utf-8"></script></div>
+		<br><br><p style="color:#777;font-size:12px;">博主QQ：337003006&nbsp;&nbsp;&nbsp;&nbsp;站长交流群：147687134（期待您的加入）</p>
+                </div>
+			<div class="meta"><i class="iconfont">0</i><a href="http://www.xiaoz.me/archives/tag/shadowsocks" rel="tag">shadowsocks</a>, <a href="http://www.xiaoz.me/archives/tag/%e7%a7%91%e5%ad%a6%e4%b8%8a%e7%bd%91" rel="tag">科学上网</a></div>
+			<div class="laoxue" id="laoxue">
+	<a href="http://www.xiaoz.me/url/?id=5" title="老薛主机 | WordPress香港、日本、美国免备案主机空间" target="_blank" rel="nofollow"><img src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/laoxue_ba626.jpg" alt="老薛主机" style="width: 100%; height: auto;max-width: 100%; display: block; "></a>
+<!--<br />
+<a href = "http://www.xiaoz.me/url/?id=8" rel = "nofollow" target = "_blank"><img src = "http://pic.bsdev.cn/wp-content/uploads/2015/07/ailibang70.jpg" /></a>
+-->
+<!--
+<a href= "http://www.xiaoz.me/jump.php?id=03" title = "恒创科技五月给力促销，全场7.5折" target = "_blank" rel = "nofollow"><img src= "http://pic.bsdev.cn/wp-content/uploads/2015/05/henghost_62670.jpg" alt = "恒创" class = "alignnone size-full wp-image-5819" /></a>
+-->	
+  </div>
+</div>
+
+<div id="cnzz">
+<!--添加相关文章推荐-->
+<div id="relevant">
+		<div class="wenzhang">
+		<b style="font-size:14px;">相关推荐：</b>
+			<ul id="cat_related">
+  <li>▪ <a href="http://www.xiaoz.me/archives/6153" rel="bookmark" title="鸟哥的Linux私房菜基础篇-第三版（PDF版）" target="_blank">鸟哥的Linux私房菜基础篇-第三版（PDF版）</a></li>
+  <li>▪ <a href="http://www.xiaoz.me/archives/6133" rel="bookmark" title="为您的VPS加速，锐速的安装与常用命令" target="_blank">为您的VPS加速，锐速的安装与常用命令</a></li>
+  <li>▪ <a href="http://www.xiaoz.me/archives/6110" rel="bookmark" title="Linux查看防火墙（iptables）状态与关闭" target="_blank">Linux查看防火墙（iptables）状态与关闭</a></li>
+  <li>▪ <a href="http://www.xiaoz.me/archives/5040" rel="bookmark" title="Linux修改SSH默认端口的方法" target="_blank">Linux修改SSH默认端口的方法</a></li>
+  <li>▪ <a href="http://www.xiaoz.me/archives/2997" rel="bookmark" title="慎用AMH限制请求处理频率的模块" target="_blank">慎用AMH限制请求处理频率的模块</a></li>
+  <li>▪ <a href="http://www.xiaoz.me/archives/2926" rel="bookmark" title="Linux实训总结" target="_blank">Linux实训总结</a></li>
+</ul>
+		</div>
+		<div class="adsense"><br><center>广告<br>招租</center></div>
+	</div>
+</div>
+<!--添加相关文章END-->
+	
+		        <div class="post_link">
+			<div class="prev" id="prev">« <a href="http://www.xiaoz.me/archives/5616" rel="prev">Windows使用Shadowsocks科学上网</a></div>
+			<div class="next" id="next"><a href="http://www.xiaoz.me/archives/5654" rel="next">站长戳进来，阿里云代金券免费领取</a> »</div>
+        </div>
+        
+        <div id="comments">						<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">发表评论 <small><a rel="nofollow" id="cancel-comment-reply-link" href="http://www.xiaoz.me/archives/5643#respond" style="display:none;">取消回复</a></small></h3>
+									<form action="http://www.xiaoz.me/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+																										<p class="comment-form"><label for="author">昵称</label> <span class="required">（必填）</span>
+	<input type="text" aria-required="true" size="30" value="" name="author" id="author" required="required"></p>
+<p class="comment-form"><label for="email">邮箱</label> <span class="required">（必填）</span>
+	<input type="email" aria-required="true" size="30" value="" name="email" id="email" required="required"></p>
+<p class="comment-form"><label for="url">网址</label>
+	<input type="url" size="30" value="" name="url" id="url"></p>
+												<p class="comment-form-comment"><label for="comment">评论</label> <textarea id="comment" name="comment" cols="45" rows="8" aria-describedby="form-allowed-tags" aria-required="true" required="required"></textarea></p>						<p class="form-allowed-tags" id="form-allowed-tags">您可以使用这些<abbr title="HyperText Markup Language">HTML</abbr>标签和属性： <code>&lt;a href="" title=""&gt; &lt;abbr title=""&gt; &lt;acronym title=""&gt; &lt;b&gt; &lt;blockquote cite=""&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=""&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=""&gt; &lt;s&gt; &lt;strike&gt; &lt;strong&gt; </code></p>
+						<p class="form-submit"><input name="submit" type="submit" id="submit" class="submit" value="提  交"> <input type="hidden" name="comment_post_ID" value="5643" id="comment_post_ID">
+<input type="hidden" name="comment_parent" id="comment_parent" value="0">
+</p>					</form>
+							</div><!-- #respond -->
+					<!-- 评论倒序排列 -->
+        <!--添加楼层-->
+        <!--添加楼层结束-->
+		<h3>11条评论</h3>
+
+		<ol class="comment_list">
+			    <li id="li-comment-4648">
+    <div id="comment-4648">
+    	<div class="avatar"><img alt="" src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/f24b4793751f7dc4c33b109ddfa96194" srcset="http://dn-gravatarimg.qbox.me/avatar/f24b4793751f7dc4c33b109ddfa96194?s=80&amp;d=mm&amp;r=g 2x" class="avatar avatar-40 photo" height="40" width="40"></div>
+    	<div class="comment">
+        	<div class="comment_meta">
+            <cite>ｎｉｃｋ</cite>            <span class="time">2015年8月11日 15:48</span>
+            <!--添加楼层-->
+<span class="floor">11楼</span>
+<!--添加楼层结束-->
+            <span class="reply"><a class="comment-reply-link" href="http://www.xiaoz.me/archives/5643?replytocom=4648#respond" onclick="return addComment.moveForm( &quot;comment-4648&quot;, &quot;4648&quot;, &quot;respond&quot;, &quot;5643&quot; )" aria-label="回复给ｎｉｃｋ">回复</a></span>
+                        </div>
+            <p>我想问问这个版本是基于 libev的吗？</p>
+                    </div>
+    </div>
+	</li><!-- #comment-## -->
+    <li id="li-comment-3807">
+    <div id="comment-3807">
+    	<div class="avatar"><img alt="" src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/d3c0711fb7541b7f5fcef2f028e4f71b" srcset="http://dn-gravatarimg.qbox.me/avatar/d3c0711fb7541b7f5fcef2f028e4f71b?s=80&amp;d=mm&amp;r=g 2x" class="avatar avatar-40 photo" height="40" width="40"></div>
+    	<div class="comment">
+        	<div class="comment_meta">
+            <cite><a href="http://www.alibaixiu.com/" rel="external nofollow" target="_blank">阿里百秀</a></cite>            <span class="time">2015年4月15日 14:42</span>
+            <!--添加楼层-->
+<span class="floor">10楼</span>
+<!--添加楼层结束-->
+            <span class="reply"><a class="comment-reply-link" href="http://www.xiaoz.me/archives/5643?replytocom=3807#respond" onclick="return addComment.moveForm( &quot;comment-3807&quot;, &quot;3807&quot;, &quot;respond&quot;, &quot;5643&quot; )" aria-label="回复给阿里百秀">回复</a></span>
+                        </div>
+            <p>网站内容不错哟，常来常往，欢迎去我们的网站做客</p>
+                    </div>
+    </div>
+	</li><!-- #comment-## -->
+    <li id="li-comment-3708">
+    <div id="comment-3708">
+    	<div class="avatar"><img alt="" src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/a7c177f6bfa6b484c5d2ad8acebf1a6c" srcset="http://dn-gravatarimg.qbox.me/avatar/a7c177f6bfa6b484c5d2ad8acebf1a6c?s=80&amp;d=mm&amp;r=g 2x" class="avatar avatar-40 photo" height="40" width="40"></div>
+    	<div class="comment">
+        	<div class="comment_meta">
+            <cite>hanbing17</cite>            <span class="time">2015年3月31日 16:03</span>
+            <!--添加楼层-->
+<span class="floor">9楼</span>
+<!--添加楼层结束-->
+            <span class="reply"><a class="comment-reply-link" href="http://www.xiaoz.me/archives/5643?replytocom=3708#respond" onclick="return addComment.moveForm( &quot;comment-3708&quot;, &quot;3708&quot;, &quot;respond&quot;, &quot;5643&quot; )" aria-label="回复给hanbing17">回复</a></span>
+                        </div>
+            <p>不错啊啊</p>
+                    </div>
+    </div>
+	</li><!-- #comment-## -->
+    <li id="li-comment-3613">
+    <div id="comment-3613">
+    	<div class="avatar"><img alt="" src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/16c891dfe3806a7ea51578996fbb0c40" srcset="http://dn-gravatarimg.qbox.me/avatar/16c891dfe3806a7ea51578996fbb0c40?s=80&amp;d=mm&amp;r=g 2x" class="avatar avatar-40 photo" height="40" width="40"></div>
+    	<div class="comment">
+        	<div class="comment_meta">
+            <cite><a href="http://www.xiaozi.me/" rel="external nofollow" target="_blank">小子</a></cite>            <span class="time">2015年3月2日 17:02</span>
+            <!--添加楼层-->
+<span class="floor">8楼</span>
+<!--添加楼层结束-->
+            <span class="reply"><a class="comment-reply-link" href="http://www.xiaoz.me/archives/5643?replytocom=3613#respond" onclick="return addComment.moveForm( &quot;comment-3613&quot;, &quot;3613&quot;, &quot;respond&quot;, &quot;5643&quot; )" aria-label="回复给小子">回复</a></span>
+                        </div>
+            <p>这个不错哟  可惜我的电脑不能用ss客户端  手机也经常抽风 唉。</p>
+                    </div>
+    </div>
+	</li><!-- #comment-## -->
+    <li id="li-comment-3606">
+    <div id="comment-3606">
+    	<div class="avatar"><img alt="" src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/d9b5321bffc5b4df0ef53c56342f5eab" srcset="http://dn-gravatarimg.qbox.me/avatar/d9b5321bffc5b4df0ef53c56342f5eab?s=80&amp;d=mm&amp;r=g 2x" class="avatar avatar-40 photo" height="40" width="40"></div>
+    	<div class="comment">
+        	<div class="comment_meta">
+            <cite><a href="http://www.xiaomeiti.com/" rel="external nofollow" target="_blank">小媒体</a></cite>            <span class="time">2015年2月28日 17:30</span>
+            <!--添加楼层-->
+<span class="floor">7楼</span>
+<!--添加楼层结束-->
+            <span class="reply"><a class="comment-reply-link" href="http://www.xiaoz.me/archives/5643?replytocom=3606#respond" onclick="return addComment.moveForm( &quot;comment-3606&quot;, &quot;3606&quot;, &quot;respond&quot;, &quot;5643&quot; )" aria-label="回复给小媒体">回复</a></span>
+                        </div>
+            <p>厉害，涨见识了。</p>
+                    </div>
+    </div>
+	</li><!-- #comment-## -->
+    <li id="li-comment-3562">
+    <div id="comment-3562">
+    	<div class="avatar"><img alt="" src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/e03287c9c4292a434755351e67635259" srcset="http://dn-gravatarimg.qbox.me/avatar/e03287c9c4292a434755351e67635259?s=80&amp;d=mm&amp;r=g 2x" class="avatar avatar-40 photo" height="40" width="40"></div>
+    	<div class="comment">
+        	<div class="comment_meta">
+            <cite><a href="http://tmy123.com/" rel="external nofollow" target="_blank">同盟源</a></cite>            <span class="time">2015年2月15日 13:19</span>
+            <!--添加楼层-->
+<span class="floor">6楼</span>
+<!--添加楼层结束-->
+            <span class="reply"><a class="comment-reply-link" href="http://www.xiaoz.me/archives/5643?replytocom=3562#respond" onclick="return addComment.moveForm( &quot;comment-3562&quot;, &quot;3562&quot;, &quot;respond&quot;, &quot;5643&quot; )" aria-label="回复给同盟源">回复</a></span>
+                        </div>
+            <p>翻墙利器！</p>
+                    </div>
+    </div>
+	</li><!-- #comment-## -->
+    <li id="li-comment-3554">
+    <div id="comment-3554">
+    	<div class="avatar"><img alt="" src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/06918362f92513c6344d9fbb72d5332b" srcset="http://dn-gravatarimg.qbox.me/avatar/06918362f92513c6344d9fbb72d5332b?s=80&amp;d=mm&amp;r=g 2x" class="avatar avatar-40 photo" height="40" width="40"></div>
+    	<div class="comment">
+        	<div class="comment_meta">
+            <cite><a href="http://www.cmsky.com/" rel="external nofollow" target="_blank">厘米</a></cite>            <span class="time">2015年2月13日 16:26</span>
+            <!--添加楼层-->
+<span class="floor">5楼</span>
+<!--添加楼层结束-->
+            <span class="reply"><a class="comment-reply-link" href="http://www.xiaoz.me/archives/5643?replytocom=3554#respond" onclick="return addComment.moveForm( &quot;comment-3554&quot;, &quot;3554&quot;, &quot;respond&quot;, &quot;5643&quot; )" aria-label="回复给厘米">回复</a></span>
+                        </div>
+            <p>我用的也是秋水逸冰的一键脚本，很不错~</p>
+                    </div>
+    </div>
+	</li><!-- #comment-## -->
+    <li id="li-comment-3526">
+    <div id="comment-3526">
+    	<div class="avatar"><img alt="" src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/63d91eb353986e0f993ed37c26fcb7ac" srcset="http://dn-gravatarimg.qbox.me/avatar/63d91eb353986e0f993ed37c26fcb7ac?s=80&amp;d=mm&amp;r=g 2x" class="avatar avatar-40 photo" height="40" width="40"></div>
+    	<div class="comment">
+        	<div class="comment_meta">
+            <cite><a href="http://www.tianruosk.com/" rel="external nofollow" target="_blank">天若随刊</a></cite>            <span class="time">2015年2月10日 09:59</span>
+            <!--添加楼层-->
+<span class="floor">3楼</span>
+<!--添加楼层结束-->
+            <span class="reply"><a class="comment-reply-link" href="http://www.xiaoz.me/archives/5643?replytocom=3526#respond" onclick="return addComment.moveForm( &quot;comment-3526&quot;, &quot;3526&quot;, &quot;respond&quot;, &quot;5643&quot; )" aria-label="回复给天若随刊">回复</a></span>
+                        </div>
+            <p>Z哥，好久没更新了啊！</p>
+                    </div>
+    </div>
+	<ol class="children">
+    <li id="li-comment-3527">
+    <div id="comment-3527">
+    	<div class="avatar"><img alt="" src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/ccc0f2e0eb9ef832232fb5112a713af4" srcset="http://dn-gravatarimg.qbox.me/avatar/ccc0f2e0eb9ef832232fb5112a713af4?s=80&amp;d=mm&amp;r=g 2x" class="avatar avatar-40 photo" height="40" width="40"></div>
+    	<div class="comment">
+        	<div class="comment_meta">
+            <cite><a href="http://www.xiaoz.me/" rel="external nofollow" target="_blank">小z</a></cite>            <span class="time">2015年2月10日 10:20</span>
+            <!--添加楼层-->
+<span class="floor">4楼</span>
+<!--添加楼层结束-->
+            <span class="reply"><a class="comment-reply-link" href="http://www.xiaoz.me/archives/5643?replytocom=3527#respond" onclick="return addComment.moveForm( &quot;comment-3527&quot;, &quot;3527&quot;, &quot;respond&quot;, &quot;5643&quot; )" aria-label="回复给小z">回复</a></span>
+                        </div>
+            <p>要上班，最近更新有点慢了。</p>
+                    </div>
+    </div>
+	</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+    <li id="li-comment-3523">
+    <div id="comment-3523">
+    	<div class="avatar"><img alt="" src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/98b1c939848d27c2d882b02afb28ca45" srcset="http://dn-gravatarimg.qbox.me/avatar/98b1c939848d27c2d882b02afb28ca45?s=80&amp;d=mm&amp;r=g 2x" class="avatar avatar-40 photo" height="40" width="40"></div>
+    	<div class="comment">
+        	<div class="comment_meta">
+            <cite><a href="http://www.banshouseo.com/" rel="external nofollow" target="_blank">站长工具</a></cite>            <span class="time">2015年2月8日 17:58</span>
+            <!--添加楼层-->
+<span class="floor">2楼</span>
+<!--添加楼层结束-->
+            <span class="reply"><a class="comment-reply-link" href="http://www.xiaoz.me/archives/5643?replytocom=3523#respond" onclick="return addComment.moveForm( &quot;comment-3523&quot;, &quot;3523&quot;, &quot;respond&quot;, &quot;5643&quot; )" aria-label="回复给站长工具">回复</a></span>
+                        </div>
+            <p>还是linux稳定</p>
+                    </div>
+    </div>
+	</li><!-- #comment-## -->
+    <li id="li-comment-3522">
+    <div id="comment-3522">
+    	<div class="avatar"><img alt="" src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/50b2df44915f9ff8bfe2f0a532f60a52" srcset="http://dn-gravatarimg.qbox.me/avatar/50b2df44915f9ff8bfe2f0a532f60a52?s=80&amp;d=mm&amp;r=g 2x" class="avatar avatar-40 photo" height="40" width="40"></div>
+    	<div class="comment">
+        	<div class="comment_meta">
+            <cite><a href="http://www.2345.com/?kxlwp" rel="external nofollow" target="_blank">乐心湖</a></cite>            <span class="time">2015年2月8日 15:43</span>
+            <!--添加楼层-->
+<span class="floor">1楼</span>
+<!--添加楼层结束-->
+            <span class="reply"><a class="comment-reply-link" href="http://www.xiaoz.me/archives/5643?replytocom=3522#respond" onclick="return addComment.moveForm( &quot;comment-3522&quot;, &quot;3522&quot;, &quot;respond&quot;, &quot;5643&quot; )" aria-label="回复给乐心湖">回复</a></span>
+                        </div>
+            <p>学习了！</p>
+                    </div>
+    </div>
+	</li><!-- #comment-## -->
+		</ol>
+
+		        
+
+	
+	</div>
+	</div>
+
+<!--上下翻页-->
+<div id="art_left">
+	<a href="javascript:;" onclick="jump(&#39;p&#39;);">
+		<img src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/left_64.png">
+	</a>
+</div>
+<div id="art_right">
+	<a href="javascript:;" onclick="jump(&#39;n&#39;);"><img src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/right_64.png"></a>
+</div>
+<script>
+	//声明全局变量
+	var prev;
+	var next;
+	//获取对应的URL
+	$(document).ready(function(){
+		prev = $("#prev a").attr("href");
+		next = $("#next a").attr("href");
+	});
+	//调用方法进行跳转
+	function jump(re) {
+		if(re == 'p') {
+			window.location.href = prev;
+		}
+		if(re == 'n') {
+			if(next == null) {
+					alert('没有了！');
+					return false;
+				}
+				else{
+					window.location.href = next;
+				}
+		}
+	}
+</script>
+<!--上下翻页END-->
+
+	<div id="sidebar">
+    <!--百度站内搜索-->
+<div id="baidu_search">
+<div id="search">
+	    <form id="searchform" method="get" action="http://so.bsdev.cn/search.php" onclick="change_search();" target="_blank">
+		    <input type="text" value="" name="q" id="s" size="30" x-webkit-speech="">
+			<button type="submit" id="searchsubmit"><i class="iconfont">ő</i></button>
+		</form>
+</div>
+</div>
+
+    <div class="sidebar">
+	<div id="text-20" class="widget widget_text">			<div class="textwidget"><center>
+<a href="http://qianbao.baidu.com/hd/huafei?invite_code=AC6CGQ6A" target="_blank" rel="nofollow" title="百度钱包1分钱充5元话费，点此参加。"><img src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/5yuan.jpg"></a>
+<!--<a href = "http://www.xiaoz.me/service" title = "WordPress站点免费服务" target = "_blank" rel = "nofollow">
+<img src = "http://pic.bsdev.cn/wp-content/uploads/2014/12/free_service.jpg" />
+</a>-->
+</center></div>
+		</div>		<div id="recent-posts-2" class="widget widget_recent_entries">		<h3>最近更新</h3>		<ul>
+					<li>
+				<a href="http://www.xiaoz.me/archives/6172">WordPress技巧，使用代码添加相关文章</a>
+							<span class="post-date">2015年10月14日</span>
+						</li>
+					<li>
+				<a href="http://www.xiaoz.me/archives/6165">恒创科技10月优惠活动，续费0元</a>
+							<span class="post-date">2015年10月12日</span>
+						</li>
+					<li>
+				<a href="http://www.xiaoz.me/archives/6153">鸟哥的Linux私房菜基础篇-第三版（PDF版）</a>
+							<span class="post-date">2015年10月8日</span>
+						</li>
+					<li>
+				<a href="http://www.xiaoz.me/archives/6147">WordPress出现Problem with the SSL CA cert错误</a>
+							<span class="post-date">2015年10月7日</span>
+						</li>
+					<li>
+				<a href="http://www.xiaoz.me/archives/6133">为您的VPS加速，锐速的安装与常用命令</a>
+							<span class="post-date">2015年10月6日</span>
+						</li>
+				</ul>
+		</div><div id="text-22" class="widget widget_text">			<div class="textwidget"><center><h3>主机推荐</h3><hr style="color:#e5e5e5;"></center>
+<a href="http://www.xiaoz.me/url/?id=6" target="_blank" title="恒创主机，快速免备案" rel="nofollow"><center><img src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/henghost_220_n.jpg" alt="恒创主机"></center></a></div>
+		</div><div id="tag_cloud-3" class="widget widget_tag_cloud"><h3>云标签</h3><div class="tagcloud"><a href="http://www.xiaoz.me/archives/tag/amh" class="tag-link-461" title="9个话题" style="color:#54b93b;font-size: 12.912280701754pt;;">amh</a>
+<a href="http://www.xiaoz.me/archives/tag/amh%e9%9d%a2%e6%9d%bf" class="tag-link-463" title="6个话题" style="color:#c8b0be;font-size: 11.070175438596pt;;">amh面板</a>
+<a href="http://www.xiaoz.me/archives/tag/azure" class="tag-link-473" title="5个话题" style="color:#e98757;font-size: 10.210526315789pt;;">azure</a>
+<a href="http://www.xiaoz.me/archives/tag/digitalocean" class="tag-link-453" title="5个话题" style="color:#13e31e;font-size: 10.210526315789pt;;">DigitalOcean</a>
+<a href="http://www.xiaoz.me/archives/tag/html" class="tag-link-619" title="5个话题" style="color:#be1d19;font-size: 10.210526315789pt;;">HTML</a>
+<a href="http://www.xiaoz.me/archives/tag/rolan" class="tag-link-80" title="3个话题" style="color:#ad808;font-size: 8pt;;">Rolan</a>
+<a href="http://www.xiaoz.me/archives/tag/sitemap" class="tag-link-532" title="5个话题" style="color:#762609;font-size: 10.210526315789pt;;">sitemap</a>
+<a href="http://www.xiaoz.me/archives/tag/tangstyle" class="tag-link-132" title="6个话题" style="color:#a4e863;font-size: 11.070175438596pt;;">TangStyle</a>
+<a href="http://www.xiaoz.me/archives/tag/uc%e7%bd%91%e7%9b%98" class="tag-link-72" title="3个话题" style="color:#4b3e89;font-size: 8pt;;">UC网盘</a>
+<a href="http://www.xiaoz.me/archives/tag/windows-azure" class="tag-link-474" title="6个话题" style="color:#d53c75;font-size: 11.070175438596pt;;">windows azure</a>
+<a href="http://www.xiaoz.me/archives/tag/wordpress" class="tag-link-57" title="14个话题" style="color:#94b1eb;font-size: 15.122807017544pt;;">wordpress</a>
+<a href="http://www.xiaoz.me/archives/tag/wordpress%e4%b8%bb%e9%a2%98" class="tag-link-61" title="13个话题" style="color:#4d793b;font-size: 14.754385964912pt;;">wordpress主题</a>
+<a href="http://www.xiaoz.me/archives/tag/wordpress%e4%bc%98%e5%8c%96" class="tag-link-275" title="5个话题" style="color:#b33f1a;font-size: 10.210526315789pt;;">wordpress优化</a>
+<a href="http://www.xiaoz.me/archives/tag/wordpress%e6%8a%80%e5%b7%a7" class="tag-link-447" title="16个话题" style="color:#81659f;font-size: 15.736842105263pt;;">wordpress技巧</a>
+<a href="http://www.xiaoz.me/archives/tag/wordpress%e6%8f%92%e4%bb%b6" class="tag-link-129" title="12个话题" style="color:#ff1ef1;font-size: 14.263157894737pt;;">wordpress插件</a>
+<a href="http://www.xiaoz.me/archives/tag/wordpress%e6%95%99%e7%a8%8b" class="tag-link-148" title="54个话题" style="color:#a6900f;font-size: 22pt;;">wordpress教程</a>
+<a href="http://www.xiaoz.me/archives/tag/wp-super-cache" class="tag-link-282" title="3个话题" style="color:#e550db;font-size: 8pt;;">WP Super Cache</a>
+<a href="http://www.xiaoz.me/archives/tag/%e4%b8%83%e7%89%9b%e4%ba%91" class="tag-link-320" title="3个话题" style="color:#f87be2;font-size: 8pt;;">七牛云</a>
+<a href="http://www.xiaoz.me/archives/tag/%e4%b8%83%e7%89%9b%e4%ba%91%e5%ad%98%e5%82%a8" class="tag-link-295" title="5个话题" style="color:#1bbd40;font-size: 10.210526315789pt;;">七牛云存储</a>
+<a href="http://www.xiaoz.me/archives/tag/%e5%8e%bb%e5%b9%bf%e5%91%8a" class="tag-link-71" title="5个话题" style="color:#d6d006;font-size: 10.210526315789pt;;">去广告</a>
+<a href="http://www.xiaoz.me/archives/tag/%e5%ae%89%e5%8d%93%e6%a8%a1%e6%8b%9f%e5%99%a8" class="tag-link-66" title="3个话题" style="color:#ab72b3;font-size: 8pt;;">安卓模拟器</a>
+<a href="http://www.xiaoz.me/archives/tag/%e6%81%92%e5%88%9b%e4%b8%bb%e6%9c%ba" class="tag-link-312" title="4个话题" style="color:#e147cf;font-size: 9.2280701754386pt;;">恒创主机</a>
+<a href="http://www.xiaoz.me/archives/tag/%e6%81%92%e5%88%9b%e7%a7%91%e6%8a%80" class="tag-link-311" title="4个话题" style="color:#4b0fda;font-size: 9.2280701754386pt;;">恒创科技</a>
+<a href="http://www.xiaoz.me/archives/tag/%e7%a6%8f%e5%88%a9%e5%88%86%e4%ba%ab" class="tag-link-294" title="4个话题" style="color:#1f1daa;font-size: 9.2280701754386pt;;">福利分享</a>
+<a href="http://www.xiaoz.me/archives/tag/%e8%99%9a%e6%8b%9f%e4%b8%bb%e6%9c%ba" class="tag-link-226" title="10个话题" style="color:#bbaeec;font-size: 13.40350877193pt;;">虚拟主机</a></div>
+</div><div id="text-16" class="widget widget_text">			<div class="textwidget"><center><a rel="nofollow" href="http://www.xiaoz.me/laoxue" target="_blank" title="老薛主机，快速免备案"><center><img src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/lx_tui.jpg" alt="老薛主机"></center></a></center></div>
+		</div>    </div>
+</div></div>
+<div id="totop" class="totop"><i class="iconfont">Ɣ</i>回顶部</div>
+<script type="text/javascript">
+	$(window).scroll(function () {
+        var dt = $(document).scrollTop();
+        var wt = $(window).height();
+        if (dt <= 0) {
+            $("#totop").hide();
+            return;
+        }
+        $("#totop").show();
+        if ($.browser.msie && $.browser.version == 6.0) {//IE6返回顶部
+            $("#totop").css("top", wt + dt - 110 + "px");
+        }
+    });
+    $("#totop").click(function () { $("html,body").animate({ scrollTop: 0 }, 200) });
+</script>
+</div>
+<div id="footer">
+<a href="http://www.xiaoz.me/sitemap.xml" target="_blank">站点地图</a> | 
+    <!--<a href = "http://www.xiaoz.me/sitemap_baidu.xml" target = "_blank">百度地图</a> |-->
+    <a href="http://www.xiaoz.me/sitemap" title="小z博客文章归档中心" target="_blank">文章归档</a> |
+    由<a href="http://www.xiaoz.me/laoxue" target="_blank" rel="nofollow">老薛主机</a>提供支持
+    <!--本站使用<a rel="nofollow" href="http://www.xiaoz.me/jump.php?id=03" target = "_blank">恒创主机</a>--><br>
+    <!--图片托管于<a rel="nofollow" href="http://www.xiaoz.me/jump.php?id=01" target = "_blank">七牛云</a>-->
+	© 2013-2015 <b>小z博客.</b>
+	Powered by WordPress.
+    Theme by <a href="http://www.xiaoz.me/archives/4856" title="WordPress博客主题TangStyle优化版1.1" target="_blank">TangStyle</a>.
+            <!--<a href = "http://www.cnzz.com/stat/website.php?web_id=1000195208" ref = "nofollow" target = "_blank" title = "站长统计">站长统计</a>-->
+    
+</div>
+<!--  微信  -->
+<div id="weixin">
+<center style="background-color:#ffffff;padding-top:8px;">小z个人微信：xiupingzou</center>
+<img src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/xiaoz_weixin.jpg">
+</div>
+
+<script type="text/javascript" src="./CentOS一键安装shadowsocks脚本 _ 小z博客_files/comment-reply.min.js"></script>
+
+
+
+<!--当屏幕宽度低于720px时更换为主题自带搜索-->
+<script>
+function change_search() {
+			var w =window.screen.width;
+			if(w <= 720) {
+				document.getElementById("searchform").action = "http://www.xiaoz.me";
+				document.getElementById("s").name = 's';
+			}
+		}
+/*$(document).ready(function(){
+	var client_width = window.screen.width;
+
+	if(client_width < 1200) {
+		$("#wechat").hide();
+		$("#tuijian").hide();
+		$("#laoxue").hide();
+	}
+});
+*/
+</script>
+<!--更换搜索引擎结束-->
+
+
+
+<!--
+获取description
+-->
+<script>
+var meta = document.getElementsByTagName('meta');var share_desc = '';for(i in meta){ if(typeof meta[i].name!="undefined"&&meta[i].name.toLowerCase()=="description"){  share_desc = meta[i].content; }}
+</script>
+<!-- Dynamic page generated in 0.369 seconds. -->
+<!-- Cached page generated by WP-Super-Cache on 2015-10-19 09:06:27 -->
+
+<!-- Compression = gzip --><lmk-translate data-hello="我是由“划词翻译”生成的，不要担心;)" class="" style="top: 434px; left: 817px;">译</lmk-translate></body></html>
